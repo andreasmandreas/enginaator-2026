@@ -6,6 +6,9 @@ readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
     "fastapi>=0.136.0",
+    "flask",
     "psycopg[binary]>=3.3.3",
     "whisper>=1.1.10",
+    "faster-whisper",
 ]
+dependencies = ["flask", "faster-whisper"]
