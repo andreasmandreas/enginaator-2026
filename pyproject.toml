@@ -11,4 +11,3 @@ dependencies = [
     "whisper>=1.1.10",
     "faster-whisper",
 ]
-dependencies = ["flask", "faster-whisper"]
