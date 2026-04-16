@@ -2,11 +2,50 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Whisper Minimal Demo</title>
+  <title>enginaator</title>
+  <link href="/assets/css/style.css" rel="stylesheet">
 </head>
 <body>
-<main>
-<div class="containerTranscribe">
+<main class="main grid justify-center items-center h-full m-md">
+<div class="container bg-main text-center p-xl flex-col justify-center items-center flex">
+    <div class="container"><img src="/assets/imgs/hotel_trivago.png" width="400px"></div>
+    <hr>
+    <div class="container flex flex-row">
+        <div class="container flex justify-center items-center" id="">
+        <div class="container lock">
+            <div class="container bg-accent gap-sm">
+                <div class="p-xl"><h2 class="text-4xl font-display">VOICE</h2></div>
+                <div class="container bg-bright">
+                    <div class="model model-slot-1"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container requestHistory">
+            <div class="container bg-accent gap-sm">
+                <div class="p-xl"><h2 class="text-4xl font-display">REQUEST</h2></div>
+                <div class="container bg-bright">
+                    <div class="model model-slot-2"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container ">
+            <div class="container bg-accent gap-sm">
+                <div class="p-xl"><h2 class="text-4xl font-display">CANCEL</h2></div>
+                <div class="container bg-bright">
+                    <div class="model model-slot-3"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+    
+</div>
+
+
+<!--<div class="containerTranscribe">
 <label for="language_select">Language:</label>
   <select id="language_select">
     <option value="">Auto-detect</option>
@@ -37,12 +76,12 @@
   <br><br>
   <label for="transcript">Transcript:</label>
   <div id="transcript"></div>
-</div>
-<div id="modelGrid">
+</div>-->
+<!--<div id="modelGrid">-->
     
 </div>
 </main>
   
-<script src="/assets/js/script.js"></script>
+<script type="module" src="/assets/js/tablet.js"></script>
 </body>
 </html>
