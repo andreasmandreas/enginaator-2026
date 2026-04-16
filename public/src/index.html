@@ -5,7 +5,9 @@
   <title>Whisper Minimal Demo</title>
 </head>
 <body>
-  <label for="language_select">Language:</label>
+<main>
+<div class="containerTranscribe">
+<label for="language_select">Language:</label>
   <select id="language_select">
     <option value="">Auto-detect</option>
     <option value="en">English</option>
@@ -35,6 +37,10 @@
   <br><br>
   <label for="transcript">Transcript:</label>
   <div id="transcript"></div>
-  <script src="/assets/js/script.js"></script>
+</div>
+<div id="modelGrid"></div>
+</main>
+  
+<script src="/assets/js/script.js"></script>
 </body>
 </html>
