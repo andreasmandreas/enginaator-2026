@@ -29,8 +29,7 @@ async function getModelInstance(modelPath) {
 	return clonedScene;
 }
 
-
-export function loadModel(container, { modelPath, enableResize = false, onError, scale = 4 } = {}) {
+export function loadModel(container, { modelPath, texturePath = null, enableResize = false, onError, repeatNumber = 1, scale = 4 } = {}) {
 	if (!modelPath) throw new Error('modelPath is required');
 
 	const scene = new Scene();
@@ -104,6 +103,25 @@ export function loadModel(container, { modelPath, enableResize = false, onError,
 		const center = new Vector3();
 		box.getCenter(center);
 		model.position.sub(center);
+
+		if (texturePath) {
+			const textureLoader = new TextureLoader();
+			textureLoader.load(texturePath, (texture) => {
+				if (isCancelled) {
+					texture.dispose();
+					return;
+				}
+				texture.repeat.set(repeatNumber, repeatNumber);
+				texture.wrapS = RepeatWrapping;
+				texture.wrapT = RepeatWrapping;
+				model.traverse((child) => {
+					if (child.isMesh && child.material) {
+						child.material.map = texture;
+						child.material.needsUpdate = true;
+					}
+				});
+			});
+		}
 
 		pivot = new Group();
 		pivot.add(model);
