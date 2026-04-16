@@ -22,7 +22,7 @@ def health() -> dict[str, str]:
 
 @app.post("/api/voice_to_text")
 def voice_to_text(files: UploadFile) ->  dict[str, str | list[typing.Any]]:
-    filename = files.filename or f"{uuid4().hex}.wav"
+    filename = files.filename or f"{uuid4().hex}.mp3"
 
     file = Path("tmp") / filename
     file.parent.mkdir(exist_ok=True)
