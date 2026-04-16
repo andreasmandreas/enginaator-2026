@@ -9,4 +9,5 @@ dependencies = [
     "psycopg[binary]>=3.3.3",
     "openai-whisper>=1.1.10",
     "uvicorn>=0.44.0",
+    "python-multipart>=0.0.26",
 ]
