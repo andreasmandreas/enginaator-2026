@@ -66,7 +66,9 @@ Transcript:
 client = openai.OpenAI(api_key=LMS_KEY, base_url=LMS_ENDPOINT)
 
 
-def process_request(text: str, room_nr: str, inventory_items: str, max_retries: int = 3):
+def process_request(
+    text: str, room_nr: str, inventory_items: str, max_retries: int = 3
+):
     full_prompt = (
         PROMPT.replace("{inventory_items}", inventory_items)
         .replace("{room_nr}", str(room_nr))
@@ -79,9 +81,9 @@ def process_request(text: str, room_nr: str, inventory_items: str, max_retries: 
                 model=LMS_MODEL,
                 messages=[
                     {"role": "system", "content": "You are a helpful JSON API."},
-                    {"role": "user", "content": full_prompt}
+                    {"role": "user", "content": full_prompt},
                 ],
-                temperature=0
+                temperature=0,
                 # Removed the response_format flag just in case your specific LMS_ENDPOINT doesn't support it
             )
 

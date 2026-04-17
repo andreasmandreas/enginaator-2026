@@ -26,6 +26,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 # Dummy middleware to log requests
 @app.middleware("http")
 async def log_requests(request: Request, call_next):
@@ -33,6 +34,7 @@ async def log_requests(request: Request, call_next):
     response = await call_next(request)
     print(f"DEBUG: Response: {response.status_code}")
     return response
+
 
 db_instance = SvaraDB("svara", "svara", "iamstupid123", "172.28.61.160")
 
@@ -51,6 +53,7 @@ class ConnectionManager:
             # No, connect_room is called FROM the route handler.
             # Let's try to set a timeout for the handshake just in case.
             import asyncio
+
             print(f"DEBUG: Attempting to accept WS for room {room_nr}")
             await asyncio.wait_for(websocket.accept(), timeout=5.0)
             print(f"WS accepted for room: {room_nr}")
@@ -61,7 +64,9 @@ class ConnectionManager:
             print(f"DEBUG: Timeout during WS accept for room {room_nr}")
             return False
         except Exception as e:
-            print(f"DEBUG: Exception during connect_room for {room_nr}: {type(e).__name__}: {e}")
+            print(
+                f"DEBUG: Exception during connect_room for {room_nr}: {type(e).__name__}: {e}"
+            )
             return False
         return True
 
@@ -98,13 +103,16 @@ manager = ConnectionManager()
 # --- STATIC FILES ---
 frontend_dir = Path(__file__).parent.parent / "public" / "src"
 
+
 @app.get("/")
 async def read_index():
     return FileResponse(frontend_dir / "index.html")
 
+
 @app.get("/dashboard")
 async def read_dashboard():
     return FileResponse(frontend_dir / "dashboard" / "index.html")
+
 
 @app.get("/favicon.ico")
 async def favicon():
@@ -113,6 +121,7 @@ async def favicon():
     if icon_path.exists():
         return FileResponse(icon_path)
     return {"status": "no favicon"}
+
 
 app.mount("/static", StaticFiles(directory=frontend_dir), name="static")
 
@@ -188,9 +197,7 @@ async def new_request(request: Request):
             file.unlink()
 
     items = await db_instance.get_items()
-    items_str = "\n".join(
-        f"Item name:{item.name} Item ID:{item.id}" for item in items
-    )
+    items_str = "\n".join(f"Item name:{item.name} Item ID:{item.id}" for item in items)
     llm_response = llm.process_request(text, room_nr, items_str)
 
     unavailable_items = []
@@ -265,13 +272,13 @@ async def update_request(request: Request, request_id: str):
     if request_status:
         request_status = request_status.upper()
 
-    await db_instance.update_request(int(request_id), request_status, int(eta) if eta else None)
+    await db_instance.update_request(
+        int(request_id), request_status, int(eta) if eta else None
+    )
 
     # Fetch updated requests to broadcast
     all_requests = await db_instance.get_requests()
-    updated_req = next(
-        (r for r in all_requests if r.id == int(request_id)), None
-    )
+    updated_req = next((r for r in all_requests if r.id == int(request_id)), None)
 
     if updated_req:
         # Route update event selectively to the specific room
