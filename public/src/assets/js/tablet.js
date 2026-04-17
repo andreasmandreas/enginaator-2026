@@ -17,3 +17,36 @@ modelSlots.forEach((slot, i) => {
 		loadModel(slot, models[i]);
 	}
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+	const dropdown = document.getElementById('custom-language-dropdown');
+	if (!dropdown) return;
+	const toggle = dropdown.querySelector('.dropdown-toggle');
+	const menu = dropdown.querySelector('.dropdown-menu');
+	const selected = dropdown.querySelector('#dropdown-selected');
+	let currentValue = '';
+
+	toggle.addEventListener('click', (e) => {
+		e.stopPropagation();
+		dropdown.classList.toggle('open');
+	});
+
+	menu.querySelectorAll('li').forEach((item) => {
+		item.addEventListener('click', (e) => {
+			e.stopPropagation();
+			menu.querySelectorAll('li').forEach(li => li.classList.remove('selected'));
+			item.classList.add('selected');
+			selected.textContent = item.textContent;
+			currentValue = item.getAttribute('data-value');
+			dropdown.classList.remove('open');
+			// If you need to trigger a change event:
+			const event = new CustomEvent('languageChange', { detail: { value: currentValue } });
+			dropdown.dispatchEvent(event);
+		});
+	});
+
+	document.addEventListener('click', () => {
+		dropdown.classList.remove('open');
+	});
+});
+

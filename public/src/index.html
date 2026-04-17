@@ -3,40 +3,62 @@
 <head>
   <meta charset="UTF-8">
   <title>enginaator</title>
-  <link href="/assets/css/style.css" rel="stylesheet">
+  <link href="/static/assets/css/style.css" rel="stylesheet">
 </head>
 <body>
-<main class="main grid justify-center items-center h-full m-md">
+<main class="main grid justify-center items-center h-full m-md" style="margin-top: 100px;">
 <div class="container bg-main text-center p-xl flex-col justify-center items-center flex">
-    <div class="container"><img src="/assets/imgs/hotel_trivago.png" width="400px"></div>
+    
+    <div class="container p-2xl"><img src="/static/assets/imgs/hotel_trivago.png" style="margin-bottom: -60px;" width="300px"></div>
+    <span id="room_number" class="m-xs">Welcome back, Room nr. ${room.number}</span>
+    <div class="container flex flex-row items-center">
+        <span id="record_status"></span>
+        <div class="language-selector-wrapper">
+            <div class="custom-dropdown" id="custom-language-dropdown">
+                <button class="dropdown-toggle font-display" type="button" id="dropdownMenuButton">
+                    <span id="dropdown-selected">Auto-detect</span>
+                    <span class="dropdown-arrow">▼</span>
+                </button>
+                <ul class="dropdown-menu" id="dropdownMenu" aria-labelledby="dropdownMenuButton">
+                    <li data-value="">Auto-detect</li>
+                    <li data-value="en">English</li>
+                    <li data-value="es">Spanish</li>
+                    <li data-value="fr">French</li>
+                    <li data-value="de">German</li>
+                    <li data-value="it">Italian</li>
+                    <li data-value="pt">Portuguese</li>
+                    <li data-value="pl">Polish</li>
+                    <li data-value="nl">Dutch</li>
+                    <li data-value="sv">Swedish</li>
+                    <li data-value="no">Norwegian</li>
+                    <li data-value="da">Danish</li>
+                    <li data-value="fi">Finnish</li>
+                    <li data-value="ru">Russian</li>
+                    <li data-value="uk">Ukrainian</li>
+                    <li data-value="tr">Turkish</li>
+                    <li data-value="ar">Arabic</li>
+                    <li data-value="hi">Hindi</li>
+                    <li data-value="zh">Chinese</li>
+                    <li data-value="ja">Japanese</li>
+                    <li data-value="ko">Korean</li>
+                </ul>   
+            </div>
+        </div>
+    </div>
     <hr>
-    <div class="container flex flex-row">
-        <div class="container flex justify-center items-center" id="">
-        <div class="container lock">
-            <div class="container bg-accent gap-sm">
-                <div class="p-xl"><h2 class="text-4xl font-display">VOICE</h2></div>
+    <div class="container flex flex-row" id="mainContainer">
+        <div class="container flex justify-center items-center">
+            <button id="record_button" class="container lock" type="button" style="background:none;border:none;padding:0;width:auto;z-index: 999;">
+            <div id="voice_box" class="container bg-accent gap-sm">
+                <div class="p-xl"><h2 class="text-4xl font-display text-center flex flex-row justify-center items-center gap-2xl">
+                    <svg width="80px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M16.19 2H7.81C4.17 2 2 4.17 2 7.81V16.18C2 19.83 4.17 22 7.81 22H16.18C19.82 22 21.99 19.83 21.99 16.19V7.81C22 4.17 19.83 2 16.19 2ZM6.75 14.14C6.75 14.55 6.41 14.89 6 14.89C5.59 14.89 5.25 14.55 5.25 14.14V9.86C5.25 9.45 5.59 9.11 6 9.11C6.41 9.11 6.75 9.45 6.75 9.86V14.14ZM9.75 15.57C9.75 15.98 9.41 16.32 9 16.32C8.59 16.32 8.25 15.98 8.25 15.57V8.43C8.25 8.02 8.59 7.68 9 7.68C9.41 7.68 9.75 8.02 9.75 8.43V15.57ZM12.75 17C12.75 17.41 12.41 17.75 12 17.75C11.59 17.75 11.25 17.41 11.25 17V7C11.25 6.59 11.59 6.25 12 6.25C12.41 6.25 12.75 6.59 12.75 7V17ZM15.75 15.57C15.75 15.98 15.41 16.32 15 16.32C14.59 16.32 14.25 15.98 14.25 15.57V8.43C14.25 8.02 14.59 7.68 15 7.68C15.41 7.68 15.75 8.02 15.75 8.43V15.57ZM18.75 14.14C18.75 14.55 18.41 14.89 18 14.89C17.59 14.89 17.25 14.55 17.25 14.14V9.86C17.25 9.45 17.59 9.11 18 9.11C18.41 9.11 18.75 9.45 18.75 9.86V14.14Z" fill="#292D32"></path> </g></svg>
+                    VOICE
+                </h2></div>
                 <div class="container bg-bright">
-                    <div class="model model-slot-1"></div>
+                <div class="model model-slot-1"></div>
                 </div>
             </div>
-        </div>
-
-        <div class="container requestHistory">
-            <div class="container bg-accent gap-sm">
-                <div class="p-xl"><h2 class="text-4xl font-display">REQUEST</h2></div>
-                <div class="container bg-bright">
-                    <div class="model model-slot-2"></div>
-                </div>
-            </div>
-        </div>
-
-        <div class="container ">
-            <div class="container bg-accent gap-sm">
-                <div class="p-xl"><h2 class="text-4xl font-display">CANCEL</h2></div>
-                <div class="container bg-bright">
-                    <div class="model model-slot-3"></div>
-                </div>
-            </div>
+            </button>
         </div>
     </div>
 
@@ -77,11 +99,12 @@
   <label for="transcript">Transcript:</label>
   <div id="transcript"></div>
 </div>-->
-<!--<div id="modelGrid">-->
     
 </div>
 </main>
+
   
-<script type="module" src="/assets/js/tablet.js"></script>
+<script type="module" src="/static/assets/js/tablet.js"></script>
+<script type="module" src="/static/assets/js/script.js"></script>
 </body>
 </html>

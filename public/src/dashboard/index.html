@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Hotel Trivago | Staff</title>
+  <link href="/static/assets/css/dashboard.css" rel="stylesheet">
+</head>
+<body>
+<div class="something-simple">
+  <div class="top-row">
+    <div class="logo-area">
+      <div class="logo">Hotel Trivago</div>
+      <div class="live-badge">Live updates</div>
+    </div>
+    <div style="font-size:13px; color:var(--text-lighter);">voice requests · real-time</div>
+  </div>
+
+  <div class="dashboard-stack">
+   
+    <div class="stats-row">
+      <div class="stat-brick"><div class="stat-label">Active requests</div><div class="stat-number accent" id="statActive">4</div></div>
+      <div class="stat-brick"><div class="stat-label">Delivered today</div><div class="stat-number" id="statDelivered">11</div></div>
+      <div class="stat-brick"><div class="stat-label">Rooms active</div><div class="stat-number">3</div></div>
+      <div class="stat-brick"><div class="stat-label">Low stock items</div><div class="stat-number" id="lowStockCount">3</div></div>
+    </div>
+
+    <div class="filter-bar">
+      <button class="filter-pill active" data-filter="all">All requests</button>
+      <button class="filter-pill" data-filter="received">Received</button>
+      <button class="filter-pill" data-filter="in_progress">In Progress</button>
+      <button class="filter-pill" data-filter="delivered">Delivered</button>
+      <button class="filter-pill" data-filter="rejected">Rejected</button>
+    </div>
+
+
+    <div class="feed-section">
+      <div class="section-header">
+        <div class="section-title"> Incoming requests</div>
+        <div class="time-ago">newest first</div>
+      </div>
+      <div id="requestsContainer">
+
+      </div>
+    </div>
+
+    <div class="inventory-panel">
+      <div class="inventory-title">Inventory & stock</div>
+      <div id="inventoryList" class="inventory-grid">
+    
+      </div>
+      <hr>
+      <div class="quick-actions">
+        <button class="quick-btn" id="mockRestockBtn">Restock (demo)</button>
+        <button class="quick-btn" id="monthlyReportBtn">Monthly report</button>
+        <button class="quick-btn" id="stocktakingBtn">Stocktaking session</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="dashboard.js"></script>
+</body>
+</html>
