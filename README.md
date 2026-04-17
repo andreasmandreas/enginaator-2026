@@ -86,5 +86,5 @@ uvicorn main:app --reload --host 0.0.0.0 --port 1488
 
 ## License
 
-MIT (or specify your license here)
+AGPL-3.0 
 
