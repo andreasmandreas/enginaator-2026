@@ -96,7 +96,8 @@ async def get_requests() -> list[Request]:
 
 
 @app.get("/api/requests/room/<room>")
-def get_requests_by_room(room: str) -> None: ...
+async def get_requests_by_room(room: str) -> list[Request]:
+    return await db_instance.get_room_request(room)
 
 
 @app.put("/api/requests/<request_id>")
