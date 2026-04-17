@@ -1,6 +1,8 @@
 import openai
 import dotenv
 from pathlib import Path
+import json
+
 LMS_KEY = dotenv.dotenv_values(".env")["LMS_KEY"]
 LMS_MODEL = dotenv.dotenv_values(".env")["LMS_MODEL"]
 LMS_ENDPOINT = dotenv.dotenv_values(".env")["LMS_ENDPOINT"]
@@ -52,15 +54,14 @@ Inventory:
 Room Number:
 {room_nr}
 """
-client = openai.OpenAI(
-    api_key=LMS_KEY,
-    base_url=LMS_ENDPOINT
-)
+client = openai.OpenAI(api_key=LMS_KEY, base_url=LMS_ENDPOINT)
 
-def process_request(text: str, room_nr: str, inventory_items: str, max_retries: int = 5):
+
+def process_request(
+    text: str, room_nr: str, inventory_items: str, max_retries: int = 5
+):
     full_prompt = (
-        PROMPT
-        .replace("{inventory_items}", inventory_items)
+        PROMPT.replace("{inventory_items}", inventory_items)
         .replace("{room_nr}", room_nr)
         .replace("{transcript}", text)
     )
@@ -68,10 +69,8 @@ def process_request(text: str, room_nr: str, inventory_items: str, max_retries: 
     for attempt in range(max_retries):
         response = client.chat.completions.create(
             model=LMS_MODEL,
-            messages=[
-                {"role": "user", "content": full_prompt}
-            ],
-            temperature=0
+            messages=[{"role": "user", "content": full_prompt}],
+            temperature=0,
         )
 
         result = response.choices[0].message.content
