@@ -4,8 +4,10 @@ from uuid import uuid4
 
 import whisper
 from fastapi import FastAPI, Request, UploadFile
+from sympy.unify.core import unify_var
 
 from db import SvaraDB
+import llm
 
 model = whisper.load_model("base")
 app = FastAPI(title="SVARA Room Service API")
@@ -40,9 +42,52 @@ async def new_request(request: Request) -> tuple[dict[str, typing.Any], int]:
 
     text = model.transcribe(file.as_posix())
 
-    # TODO feed into LLM
-    {"text": text, "room_nr": room_nr, "items": ...}  # noqa: B018
-    return None
+    items = db_instance.get_items()
+
+    items_str = "\n".join(
+        f"Item name:{item.name} Item ID:{item.item_id}" for item in items
+    )
+
+    llm_response = llm.process_request(text, room_nr, items_str)
+    # {
+    #     "items": [
+    #         {
+    #             "item_id": 1,
+    #             "item_name": "Bath Towel",
+    #             "amount": 2,
+    #             "room_nr": "204",
+    #             "text_as_notes": "2 Bath Towels to room 204"
+    #         }
+    #     ],
+    #     "unavailable_items": []
+    # }
+
+    unavailable_items = []
+    added_items = []
+
+    for item in llm_response.get("items", []):
+        is_possible = db_instance.is_item_available(item["item_id"],item["amount"])
+        if not is_possible:
+            unavailable_items.append({
+                "item" : item,
+                "reason": "There are not enough of this item in the room."
+            })
+        added_items.append(item)
+        await db_instance.add_request(
+            int(room_nr),
+            item["item_id"],
+            item["amount"],
+            item["text_as_notes"],
+        )
+
+    unavailable_items.extend(
+        [{"item": item, "reason": "Item isn't available"} for item in llm_response.get("unavailable_items", [])]
+    )
+
+    return {
+        "items": added_items,
+        "unavailable_items": unavailable_items,
+    }, 200
 
 
 @app.get("/api/all_requests")
